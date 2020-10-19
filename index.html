@@ -7,24 +7,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- You can add your styles and scripts here -->
     <link rel="stylesheet" type="text/css" media="screen" href="styles/provided.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/loginPage.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/registerPage.css">
     <script type="module" src="src/helpers.js"></script>
     <script type="module" src="src/api.js"></script>
 </head>
 <body>
-    <!-- This is an example app structure, you can modify this as much as you choose --> 
-    <header class="banner">
-        <h1>Quickpic</h1>
-        <ul class="nav">
-            <li class="nav-item">Item</li>
-            <li class="nav-item">Item</li>
-        </ul>
-    </header>
-    <main role="main">
-        <!-- app goes here --> 
-    </main>
-    <footer>
-        <p>&copy; Quickpic</p>
-    </footer>
+    <div class="container" id="loginPage">
+        <h1>Social Network Login</h1>
+        <form name="loginForm">
+            <input placeholder="Username" type="text" name="usernameLogin"> <br>
+            <input placeholder="Password" type="password" name="passwordLogin"> <br>
+            <p id="errorMessageDisplayForLogin"></p>
+            <button id="loginButtonForLoginPage">Login</button>
+            <button id="registerButtonForLoginPage">Not a Member? Register Now</button>
+        </form>
+    </div>
+    <div class="container" id="registerPage" style="display: none">
+            <h1>Social Network Register</h1>
+            <form name="registerForm">
+                <input placeholder="Enter a Username" type="text" name="usernameRegister"> <br>
+                <input placeholder="Enter a Password" type="password" name="passwordRegister"> <br>
+                <input placeholder="Confirm Password" type="password" name="passwordConfirmRegister"> <br>
+                <input placeholder="Enter an Email" type="text" name="emailRegister"> <br>
+                <input placeholder="Enter your Name" type="text" name="nameRegister"> <br>
+                <p id = "errorMessageDisplayForRegister"></p>
+                <button id="registerButtonForRegisterPage">Register</button>
+                <button id="loginButtonForRegisterPage">Already a Member? Login Now</button>
+            </form>
+        </div>
+
+    <div class="container" id="feedPage" style="display: none">
+        Not Yet Implemented;
+    </div>
     <script type="module" src="src/main.js"></script>
 </body>
 </html>

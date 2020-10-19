@@ -19,7 +19,7 @@ export default class API {
     } 
 
     /** @param {String} path */
-    makeAPIRequest(path) {
-        return getJSON(`${this.url}/${path}`);
+    makeAPIRequest(path, options) {
+        return getJSON(`${this.url}/${path}`, options);
     }
 }
