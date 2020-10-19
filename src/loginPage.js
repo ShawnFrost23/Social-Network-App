@@ -18,8 +18,10 @@ const handleLogin = (res) => {
         username[0].style.border = '1px solid red';
         const password = document.getElementsByName('passwordLogin')
         password[0].style.border = '1px solid red';
-        const errorMessageDisplay = document.getElementById('errorMessageDisplayForLogin');
+        const errorMessageDisplay = document.createElement('p')
         errorMessageDisplay.textContent = res.message;
+        errorMessageDisplay.id = 'errorMessageDisplayForLogin';
+        document.getElementById('formLoginPage').appendChild(errorMessageDisplay);
     }
 }
 

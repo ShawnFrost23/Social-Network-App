@@ -14,28 +14,31 @@
     </head>
     <body>
         <div class="container" id="loginPage">
-            <h1>Social Network Login</h1>
-            <form name="loginForm">
-                <input placeholder="Username" type="text" name="usernameLogin"> <br>
-                <input placeholder="Password" type="password" name="passwordLogin"> <br>
-                <p id="errorMessageDisplayForLogin"></p>
+            <div class="subContainer">
+                <h1>Social Network Login</h1>
+                <form name="loginForm" id="formLoginPage">
+                    <input placeholder="Username" type="text" name="usernameLogin"> <br>
+                    <input placeholder="Password" type="password" name="passwordLogin"> <br>
+                </form>
                 <button id="loginButtonForLoginPage">Login</button>
                 <button id="registerButtonForLoginPage">Not a Member? Register Now</button>
-            </form>
+            </div>
+            
         </div>
         <div class="container" id="registerPage" style="display: none">
+            <div class="subContainer">   
                 <h1>Social Network Register</h1>
-                <form name="registerForm">
+                <form name="registerForm" id="formRegisterPage">
                     <input placeholder="Enter a Username" type="text" name="usernameRegister"> <br>
                     <input placeholder="Enter a Password" type="password" name="passwordRegister"> <br>
                     <input placeholder="Confirm Password" type="password" name="passwordConfirmRegister"> <br>
                     <input placeholder="Enter an Email" type="text" name="emailRegister"> <br>
                     <input placeholder="Enter your Name" type="text" name="nameRegister"> <br>
-                    <p id = "errorMessageDisplayForRegister"></p>
-                    <button id="registerButtonForRegisterPage">Register</button>
-                    <button id="loginButtonForRegisterPage">Already a Member? Login Now</button>
                 </form>
+                <button id="registerButtonForRegisterPage">Register</button>
+                <button id="loginButtonForRegisterPage">Already a Member? Login Now</button>
             </div>
+        </div>
 
         <div class="container" id="feedPage" style="display: none">
             Not Yet Implemented

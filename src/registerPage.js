@@ -20,8 +20,15 @@ const handleNotEqualPasswords = () => {
     const passwordConfirm = document.getElementsByName('passwordConfirmRegister')
     passwordConfirm[0].style.border = '1px solid red';
     passwordConfirm[0].textContent = '';
-    const errorMessageDisplay = document.getElementById('errorMessageDisplayForRegister')
-    errorMessageDisplay.textContent = "Entered passwords do not match.";
+    if (document.getElementById('errorMessageDisplayForRegister')) {
+        const errorMessageDisplay = document.getElementById('errorMessageDisplayForRegister');
+        errorMessageDisplay.textContent = errorMessageDisplay.textContent = "Entered passwords do not match.";
+    } else {
+        const errorMessageDisplay = document.createElement('p');
+        errorMessageDisplay.textContent = "Entered passwords do not match.";
+        errorMessageDisplay.id = 'errorMessageDisplayForRegister'
+        document.getElementById('formRegisterPage').appendChild(errorMessageDisplay);
+    }
 }
 
 const handleRegister = (res) => {
@@ -37,8 +44,15 @@ const handleRegister = (res) => {
         password[0].style.border = '';
         const passwordConfirm = document.getElementsByName('passwordConfirmRegister')
         passwordConfirm[0].style.border = '';
-        const errorMessageDisplay = document.getElementById('errorMessageDisplayForRegister')
-        errorMessageDisplay.textContent = res.message;
+        if (document.getElementById('errorMessageDisplayForRegister')) {
+            const errorMessageDisplay = document.getElementById('errorMessageDisplayForRegister');
+            errorMessageDisplay.textContent = res.message;
+        } else {
+            const errorMessageDisplay = document.createElement('p');
+            errorMessageDisplay.textContent = res.message;
+            errorMessageDisplay.id = 'errorMessageDisplayForRegister'
+            document.getElementById('formRegisterPage').appendChild(errorMessageDisplay);
+        }
     }
 }
 
