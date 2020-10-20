@@ -1,0 +1,67 @@
+.topMenuBar {
+    height: 100x;
+    width: 100%;
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.imageBox {
+    width: 45%;
+    border: 1px solid red;
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+}
+
+.postAuthorName {
+    display: flex;
+    justify-content: flex-start;
+    height: 10%;
+    width: 100%;
+}
+
+.postTimestamp {
+    display: flex;
+    justify-content: flex-start;
+    height: 10%;
+    width: 100%;
+}
+
+.image {
+    height: 50%;
+    width: 100%;
+}
+
+img {
+
+}
+
+.postInfo {
+    display: flex;
+    height: 10%;
+    width: 100%;
+}
+
+.numLikes {
+    width: 50%;
+    height: 100%;
+}
+
+.numComments {
+    width: 50%;
+    height: 100%;
+}
+
+.postDescription {
+    height: 20%;
+    width: 100%;
+}

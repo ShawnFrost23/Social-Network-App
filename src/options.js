@@ -25,7 +25,7 @@ export const putMethodOptions = {
 export const getMethodOptions = {
     method: 'GET',
     headers: {
+        'Authorization': '',
         'Content-Type': 'application/json'
-    },
-    body: JSON.stringify()
+    }
 }
