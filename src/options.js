@@ -18,8 +18,9 @@ export const putMethodOptions = {
     method: 'PUT',
     headers: {
         'Authorization': '',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
     },
+    body: JSON.stringify()
 }
 
 export const getMethodOptions = {

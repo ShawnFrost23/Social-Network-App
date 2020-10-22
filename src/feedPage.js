@@ -11,7 +11,119 @@ const likeButtonClickHandler = (post) => {
 }
 
 const numLikesButtonClickHandler = () => {
+    let postId = localStorage.getItem('currentPostId')
+    getMethodOptions.Authorization = 'Token ' + localStorage.getItem('token')
+    api.makeAPIRequest('post/?id=' + postId, getMethodOptions)
+            .then(newPost => {
+                let modalContent = document.getElementById("modal-content");
+                while (modalContent.firstChild) {
+                    modalContent.removeChild(modalContent.firstChild);
+                }
+                let header = document.createElement('p')
+                let numLikes = newPost.meta.likes.length
+                if (numLikes == 0) {
+                    header.textContent = "This post is liked by no one yet :("
+                } else if (numLikes == 1) {
+                    header.textContent = "This post is liked by " + numLikes + " person"
+                } else {
+                    header.textContent = "This post is liked by " + numLikes + " people"
+                }
+                modalContent.appendChild(header)
+                newPost.meta.likes.forEach(id => {
+                    api.makeAPIRequest('user/?id=' + id, getMethodOptions)
+                    .then(user => {
+                        let userName = document.createElement('p')
+                        userName.textContent = user.username
+                        modalContent.appendChild(userName)
+                    })
+                });
+                let modal = document.getElementById('myModal')
+                let span = document.getElementById('close')
+                let modalWindow = document.getElementById('modalWindow')
+                modalWindow.style.display = 'block'
+                modal.style.display = "block";
+                span.onclick = function() {
+                    modal.style.display = "none";
+                    modalWindow.style.display = 'none'
+                }
+            })
+}
 
+const commentButtonClickHandler = () => {
+    let currentPostId = localStorage.getItem('currentPostId')
+    getMethodOptions.Authorization = 'Token ' + localStorage.getItem('token')
+    api.makeAPIRequest('post/?id=' + currentPostId, getMethodOptions)
+        .then(newPost => {
+            let modalContent = document.getElementById("modal-content");
+            while (modalContent.firstChild) {
+                modalContent.removeChild(modalContent.firstChild);
+            }
+            let header = document.createElement('p')
+            let numComments = newPost.comments.length
+            if (numComments == 0) {
+                header.textContent = "This post has no comment yet :("
+            } else if (numComments == 1) {
+                header.textContent = "This post has " + numComments + " comment"
+            } else {
+                header.textContent = "This post has " + numComments + " comments"
+            }
+            modalContent.appendChild(header)
+
+            let commentForm = document.createElement('form')
+            commentForm.name = 'commentForm'
+            commentForm.id = 'commentForm'
+            let comment = document.createElement('input')
+            comment.placeholder = 'Type your comment here'
+            comment.name = 'commentBox'
+            comment.type = 'text'
+            comment.classname = 'commentBox'
+            commentForm.appendChild(comment)
+            modalContent.appendChild(commentForm);
+            commentForm = document.forms.commentForm
+            let postComment = document.createElement('button')
+            postComment.textContent = 'Post'
+            postComment.addEventListener('click', () => {
+                let commentPosted = commentForm.elements.commentBox.value
+                if (commentPosted) {
+                    putMethodOptions.headers.Authorization = 'Token ' + localStorage.getItem('token')
+                    putMethodOptions.body = JSON.stringify({'comment':commentPosted});
+                    api.makeAPIRequest('post/comment?id=' + newPost.id, putMethodOptions)
+                        .then(response => {
+                            console.log(response);
+                        })
+                        .catch(err => {
+                            console.log(err);                               
+                        })
+                }                    
+            })
+            modalContent.appendChild(postComment);
+            let index = newPost.comments.length - 1;
+            while (index >= 0) {
+                let comment = newPost.comments[index];
+                let commentDiv = document.createElement('div')
+                let userName = document.createElement('p')
+                let commentTime = document.createElement('p')
+                userName.textContent = comment.author
+                commentTime = checkTimeStampDate(new Date(comment.published * 1000), commentTime)
+                let commentContent = document.createElement('p')
+                commentContent.textContent = comment.comment
+                commentDiv.appendChild(userName)
+                commentDiv.appendChild(commentTime)
+                commentDiv.appendChild(commentContent)
+                modalContent.appendChild(commentDiv)
+                index = index - 1;
+            }
+
+            let modal = document.getElementById('myModal')
+            let span = document.getElementById('close')
+            let modalWindow = document.getElementById('modalWindow')
+            modalWindow.style.display = 'block'
+            modal.style.display = "block";
+            span.onclick = function() {
+                modal.style.display = "none";
+                modalWindow.style.display = 'none'
+            }
+        })
 }
 
 const checkTimeStampDate = (postDate, postTimeStamp) => {
@@ -45,6 +157,7 @@ const checkTimeStampDate = (postDate, postTimeStamp) => {
 
     return postTimeStamp;
 }
+
 const createPostDiv = (post) => {
     const imageBox = document.getElementById(post.id);
     if (imageBox.hasChildNodes()) {
@@ -79,6 +192,7 @@ const createPostDiv = (post) => {
 
     const likeButton = document.createElement('button')
     likeButton.className = 'likeButton'
+    likeButton.textContent = "Like"
     likeButton.addEventListener('click', () => {
         putMethodOptions.headers.Authorization = 'Token ' + localStorage.getItem('token');
         api.makeAPIRequest('post/like?id=' + post.id, putMethodOptions)
@@ -88,7 +202,7 @@ const createPostDiv = (post) => {
                 })
             .catch(err => console.log(err))
     })
-    likeButton.textContent = "Like"
+
     likeInfo.appendChild(likeButton);
     
     const unlikeButton = document.createElement('button')
@@ -114,47 +228,22 @@ const createPostDiv = (post) => {
     const numLikesButton = document.createElement('button');
     numLikesButton.className = 'numLikesButton';
     numLikesButton.addEventListener('click', () => {
-        let modal = document.getElementById("myModal");
-        let span = document.createElement('span');
-        span.className = 'close'
-        span.textContent = '&times;'
-        let modalContent = document.createElement('div')
-        modalContent.appendChild(span)
-        getMethodOptions.Authorization = 'Token ' + localStorage.getItem('token')
-        post.meta.likes.forEach(id => {
-            api.makeAPIRequest('user/?id=' + id, getMethodOptions)
-            .then(user => {
-                let userName = document.createElement('p')
-                userName.textContent = user.username
-                modalContent.appendChild(userName)
-            })
-        });
-        modal.appendChild(modalContent)
-        
-        modal.style.display = "block";
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-          
-          // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-              modal.style.display = "none";
-            }
-        }
+        localStorage.setItem('currentPostId', post.id)
+        numLikesButtonClickHandler()
+        localStorage.removeItem('currentPostId')
     })
-    getMethodOptions.headers.Authorization = 'Token ' + localStorage.getItem('token')
-    api.makeAPIRequest('post/?id=' + post.id, getMethodOptions)
-        .then(response => {
-            numLikesButton.textContent = "Likes " + response.meta.likes.length;
-        })
-        .catch(err => console.log(err))
+    numLikesButton.textContent = "See who likes this"
     otherInfo.appendChild(numLikesButton);
 
-    const numComments = document.createElement('div');
-    numComments.className = 'numComments';
-    numComments.textContent = "Comments " + post.comments.length;
-    otherInfo.appendChild(numComments);
+    const commentButton = document.createElement('button');
+    commentButton.className = 'commentButton';
+    commentButton.textContent = "Comment";
+    commentButton.addEventListener('click', () => {
+        localStorage.setItem('currentPostId', post.id)
+        commentButtonClickHandler()
+        localStorage.removeItem('currentPostId')
+    })
+    otherInfo.appendChild(commentButton);
 
     postInfo.appendChild(otherInfo);
 
