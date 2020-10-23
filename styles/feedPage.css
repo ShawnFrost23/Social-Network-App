@@ -130,3 +130,14 @@ img {
     text-decoration: none;
     cursor: pointer;
   }
+
+  .commentDiv {
+      border: 1px solid red;
+      margin: 10px;
+      padding: 5px;
+  }
+
+  .commentHeader {
+      background-color: black;
+      margin: 0px;
+  }

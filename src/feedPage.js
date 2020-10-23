@@ -90,6 +90,9 @@ const commentButtonClickHandler = () => {
                     api.makeAPIRequest('post/comment?id=' + newPost.id, putMethodOptions)
                         .then(response => {
                             console.log(response);
+                            localStorage.setItem('currentPostId', currentPostId)
+                            commentButtonClickHandler()
+                            localStorage.removeItem('currentPostId')
                         })
                         .catch(err => {
                             console.log(err);                               
@@ -101,9 +104,12 @@ const commentButtonClickHandler = () => {
             while (index >= 0) {
                 let comment = newPost.comments[index];
                 let commentDiv = document.createElement('div')
+                commentDiv.className = 'commentDiv'
                 let userName = document.createElement('p')
                 let commentTime = document.createElement('p')
-                userName.textContent = comment.author
+                userName.className = 'commentHeader'
+                commentTime.className = 'commentHeader'
+                userName.textContent = "By " + comment.author
                 commentTime = checkTimeStampDate(new Date(comment.published * 1000), commentTime)
                 let commentContent = document.createElement('p')
                 commentContent.textContent = comment.comment
@@ -122,6 +128,11 @@ const commentButtonClickHandler = () => {
             span.onclick = function() {
                 modal.style.display = "none";
                 modalWindow.style.display = 'none'
+                getMethodOptions.headers.Authorization = 'Token ' + localStorage.getItem('token')
+                api.makeAPIRequest('post/?id=' + currentPostId, getMethodOptions)
+                    .then(res => {
+                        createPostDiv(res)
+                    })
             }
         })
 }
@@ -198,7 +209,12 @@ const createPostDiv = (post) => {
         api.makeAPIRequest('post/like?id=' + post.id, putMethodOptions)
             .then(
                 res => {
-                    createPostDiv(post)
+                    getMethodOptions.headers.Authorization = 'Token ' + localStorage.getItem('token')
+                    api.makeAPIRequest('post/?id=' + post.id, getMethodOptions)
+                    .then(res => {
+                        //console.log(res);
+                        createPostDiv(res)
+                    })
                 })
             .catch(err => console.log(err))
     })
@@ -212,7 +228,12 @@ const createPostDiv = (post) => {
         api.makeAPIRequest('post/unlike?id=' + post.id, putMethodOptions)
             .then(
                 res => {
-                    createPostDiv(post)
+                    getMethodOptions.headers.Authorization = 'Token ' + localStorage.getItem('token')
+                    api.makeAPIRequest('post/?id=' + post.id, getMethodOptions)
+                    .then(res => {
+                        //console.log(res);
+                        createPostDiv(res)
+                    })
                 }
             )
             .catch(err => console.log(err))
@@ -224,7 +245,6 @@ const createPostDiv = (post) => {
 
     const otherInfo = document.createElement('div');
     otherInfo.className = 'otherInfo'
-
     const numLikesButton = document.createElement('button');
     numLikesButton.className = 'numLikesButton';
     numLikesButton.addEventListener('click', () => {
@@ -232,12 +252,12 @@ const createPostDiv = (post) => {
         numLikesButtonClickHandler()
         localStorage.removeItem('currentPostId')
     })
-    numLikesButton.textContent = "See who likes this"
+    numLikesButton.textContent = "See who likes this (" + post.meta.likes.length + ")"
     otherInfo.appendChild(numLikesButton);
 
     const commentButton = document.createElement('button');
     commentButton.className = 'commentButton';
-    commentButton.textContent = "Comment";
+    commentButton.textContent = "Comment (" + post.comments.length + ")";
     commentButton.addEventListener('click', () => {
         localStorage.setItem('currentPostId', post.id)
         commentButtonClickHandler()

@@ -8,12 +8,9 @@ const getJSON = (path, options) => {
         fetch(path, options)
         .then(res =>  {
             if (res.status === 200) {
-                console.log("Api.js here 1");
                 resolve(res.json())
             } else {
-                console.log("Api.js here 2");
                 res.json().then(decodedData => {
-                    console.log("Api.js here 3")
                     reject(decodedData.message)
                 }).catch(err => console.log('Catch error:' + err))
             }
