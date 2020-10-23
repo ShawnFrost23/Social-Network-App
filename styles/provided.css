@@ -43,14 +43,13 @@ form {
     align-items: center;
 
 }
-
-button {
+.loginAndRegisterButtons {
     width: 50%;
     height: 40px;
     margin: 5px;
 }
 
-button:hover {
+.loginAndRegisterButtons:hover {
     background-color: black;
     color: white;
     border-color: red;
