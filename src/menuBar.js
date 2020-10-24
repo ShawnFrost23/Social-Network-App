@@ -1,6 +1,7 @@
 import API from './api.js';
 import {postMethodOptions, getMethodOptions, putMethodOptions} from './options.js'
 import getUserFeed from './feedPage.js';
+import getUserProfile from './profilePage.js';
 
 // A helper you may want to use when uploading new images to the server.
 // import { fileToDataUrl } from './helpers.js';
@@ -16,4 +17,14 @@ goHomeButton.addEventListener('click', () => {
     const userFeed = document.getElementById('userFeed')
     userFeed.style.display = 'flex'
     getUserFeed()
+})
+
+const goToMyProfileButton = document.getElementById('myProfile')
+goToMyProfileButton.addEventListener('click', () => {
+    const profilePage = document.getElementById('profilePage')
+    profilePage.style.display = 'flex'
+    const userFeed = document.getElementById('userFeed')
+    userFeed.style.display = 'none'
+    getUserProfile("", true)
+    
 })

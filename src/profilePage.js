@@ -45,7 +45,7 @@ const getFollowingInfo = (user) => {
         .catch((error) => console.log(error));
 }
 
-const handleResponse = (user) => {
+const handleResponse = (user, isMyProfile) => {
     const profilePage = document.getElementById('profilePage')
     if (profilePage.hasChildNodes()) {
         while (profilePage.firstChild) {
@@ -76,32 +76,37 @@ const handleResponse = (user) => {
     followInfo.appendChild(numFollowing)
 
     profilePage.appendChild(followInfo)
+    if (!isMyProfile) {
+        const followTheUser = document.createElement('div')
+        followTheUser.className = 'followTheUser'
 
-    const followTheUser = document.createElement('div')
-    followTheUser.className = 'followTheUser'
+        const followButton = document.createElement('button')
+        followButton.className = 'followButton'
+        followButton.textContent = 'Follow'
+        followButton.addEventListener('click', () => {
+            followButtonClickHandler(user)
+        })
+        followTheUser.appendChild(followButton)
 
-    const followButton = document.createElement('button')
-    followButton.className = 'followButton'
-    followButton.textContent = 'Follow'
-    followButton.addEventListener('click', () => {
-        followButtonClickHandler(user)
-    })
-    followTheUser.appendChild(followButton)
+        const unfollowButton = document.createElement('button')
+        unfollowButton.className = 'unfollowButton'
+        unfollowButton.textContent = 'Unfollow'
+        unfollowButton.addEventListener('click', () => {
+            unfollowButtonClickHandler(user)
+        })
+        followTheUser.appendChild(unfollowButton)
 
-    const unfollowButton = document.createElement('button')
-    unfollowButton.className = 'unfollowButton'
-    unfollowButton.textContent = 'Unfollow'
-    unfollowButton.addEventListener('click', () => {
-        unfollowButtonClickHandler(user)
-    })
-    followTheUser.appendChild(unfollowButton)
+        profilePage.appendChild(followTheUser)
 
-    profilePage.appendChild(followTheUser)
+    }
 
     const content = document.createElement('div')
     content.className = 'content'
     content.id = 'userProfile'
     profilePage.appendChild(content)
+    if (user.posts.length == 0) {
+        content.textContent = "Make you first post to see it here."
+    }
     user.posts.forEach(postId => {
         getMethodOptions.headers.Authorization = 'Token ' + localStorage.getItem('token')
         api.makeAPIRequest('post/?id=' + postId, getMethodOptions)
@@ -116,10 +121,9 @@ const handleResponse = (user) => {
             })
     })
     
-
 }
 
-export default function getUserProfile(user) {
+export default function getUserProfile(user, isMyProfile) {
     console.log("Hey username " + user + " pressed");
     const userFeed = document.getElementById('userFeed')
     if (userFeed.hasChildNodes()) {
@@ -134,7 +138,7 @@ export default function getUserProfile(user) {
     getMethodOptions.headers.Authorization = 'Token ' + localStorage.getItem('token')
     api.makeAPIRequest('user/?username=' + user, getMethodOptions)
         .then((response) => {
-            handleResponse(response)
+            handleResponse(response, isMyProfile)
         })
         .catch((error) => console.log(error));
 }

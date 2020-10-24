@@ -7,9 +7,6 @@ import getUserProfile from './profilePage.js';
 // This url may need to change depending on what port your backend is running
 // on.
 const api = new API('http://localhost:5000');
-const likeButtonClickHandler = (post) => {
-
-}
 
 const numLikesButtonClickHandler = () => {
     let postId = localStorage.getItem('currentPostId')
@@ -185,7 +182,8 @@ export function createPostDiv(post) {
     postAuthor.className = 'postAuthor'
     postAuthor.textContent = post.meta.author;
     postAuthor.addEventListener('click', () => {
-        getUserProfile(post.meta.author)
+        let isMyProfile = false;
+        getUserProfile(post.meta.author, isMyProfile)
     })
     postAuthorName.appendChild(postAuthor);
     imageBox.appendChild(postAuthorName);
