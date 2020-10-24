@@ -10,6 +10,7 @@
         <link rel="stylesheet" type="text/css" media="screen" href="styles/loginPage.css">
         <link rel="stylesheet" type="text/css" media="screen" href="styles/registerPage.css">
         <link rel="stylesheet" type="text/css" media="screen" href="styles/feedPage.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="styles/profilePage.css">
         <script type="module" src="src/helpers.js"></script>
         <script type="module" src="src/api.js"></script>
     </head>
@@ -43,20 +44,25 @@
 
         <div class="container" id="feedPage" style="display: none">
             <div class="topMenuBar">
-                Menubar
+                <button id="goHome">Go Home</button>
+                <button id= "myProfile">My Profile</button>
             </div>
-            <div class="content">
-                <div class="modalWindow" id="modalWindow">
-                    <div class="modal" id="myModal">
-                            <!-- Modal content -->
-                        <span class="close" id="close">&times;</span>
-                        <div class="modal-content" id="modal-content">
-                        </div>
+            <div class="content" id="userFeed">
+                
+            </div>
+            <div class="modalWindow" id="modalWindow">
+                <div class="modal" id="myModal">
+                    <span class="close" id="close">&times;</span>
+                    <div class="modal-content" id="modal-content">
                     </div>
                 </div>
+            </div>
+            <div class="profilePage" id="profilePage">
+                Not Yet Implemented
             </div>
         </div>
         <script type="module" src="src/main.js"></script>
         <script type="module" src="src/registerPage.js"></script>
+        <script type="module" src="src/menuBar.js"></script>
     </body>
 </html>

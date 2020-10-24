@@ -1,5 +1,6 @@
 import API from './api.js';
 import {postMethodOptions, getMethodOptions, putMethodOptions} from './options.js'
+import getUserProfile from './profilePage.js';
 // A helper you may want to use when uploading new images to the server.
 // import { fileToDataUrl } from './helpers.js';
 
@@ -169,7 +170,7 @@ const checkTimeStampDate = (postDate, postTimeStamp) => {
     return postTimeStamp;
 }
 
-const createPostDiv = (post) => {
+export function createPostDiv(post) {
     const imageBox = document.getElementById(post.id);
     if (imageBox.hasChildNodes()) {
         while (imageBox.firstChild) {
@@ -178,7 +179,13 @@ const createPostDiv = (post) => {
     }
     const postAuthorName = document.createElement('div');
     postAuthorName.className = 'postAuthorName';
-    postAuthorName.textContent = post.meta.author;
+    const postAuthor = document.createElement('button')
+    postAuthor.className = 'postAuthor'
+    postAuthor.textContent = post.meta.author;
+    postAuthor.addEventListener('click', () => {
+        getUserProfile(post.meta.author)
+    })
+    postAuthorName.appendChild(postAuthor);
     imageBox.appendChild(postAuthorName);
 
     let postDate = new Date(post.meta.published * 1000);
@@ -276,7 +283,11 @@ const createPostDiv = (post) => {
 }
 const handleResponse = (response) => {
     const content = document.getElementsByClassName('content')
-
+    if (content[0].hasChildNodes()) {
+        while (content[0].firstChild) {
+            content[0].removeChild(content[0].firstChild);
+        }
+    }
     response.posts.forEach(post => {
         let imageBox = document.createElement('div')
         imageBox.className = 'imageBox'
