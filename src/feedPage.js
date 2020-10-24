@@ -1,5 +1,5 @@
 import API from './api.js';
-import {postMethodOptions, getMethodOptions, putMethodOptions} from './options.js'
+import {postMethodOptions, getMethodOptions, putMethodOptions, deleteMethodOptions} from './options.js'
 import getUserProfile from './profilePage.js';
 // A helper you may want to use when uploading new images to the server.
 // import { fileToDataUrl } from './helpers.js';
@@ -47,7 +47,7 @@ const numLikesButtonClickHandler = () => {
             })
 }
 
-const commentButtonClickHandler = () => {
+const commentButtonClickHandler = (isMyPost) => {
     let currentPostId = localStorage.getItem('currentPostId')
     getMethodOptions.Authorization = 'Token ' + localStorage.getItem('token')
     api.makeAPIRequest('post/?id=' + currentPostId, getMethodOptions)
@@ -129,7 +129,7 @@ const commentButtonClickHandler = () => {
                 getMethodOptions.headers.Authorization = 'Token ' + localStorage.getItem('token')
                 api.makeAPIRequest('post/?id=' + currentPostId, getMethodOptions)
                     .then(res => {
-                        createPostDiv(res)
+                        createPostDiv(res, isMyPost)
                     })
             }
         })
@@ -169,7 +169,66 @@ const checkTimeStampDate = (postDate, postTimeStamp) => {
     return postTimeStamp;
 }
 
-export function createPostDiv(post) {
+const updateButtonClickHandler = (post) => {
+    let editForm = document.forms.editForm
+    let newDescription = editForm.elements.descriptionOfPost.value
+    putMethodOptions.headers.Authorization = 'Token ' + localStorage.getItem('token')
+    let newBody = {'description_text' : newDescription}
+    putMethodOptions.body = JSON.stringify(newBody)
+    api.makeAPIRequest('post/?id=' + post.id, putMethodOptions)
+        .then(response => {
+            getUserProfile("", true)
+        })
+        .catch(err => console.log(err))
+}
+const editPostButtonClickHandler = (post) => {
+    let modalContent = document.getElementById("modal-content");
+    while (modalContent.firstChild) {
+        modalContent.removeChild(modalContent.firstChild);
+    }
+
+    let editForm = document.createElement("form")
+    editForm.name = "editForm"
+
+    let descriptionText = document.createElement("input")
+    descriptionText.type = 'text'
+    descriptionText.name = 'descriptionOfPost'
+    descriptionText.placeholder = 'Change Post Description'
+    editForm.appendChild(descriptionText)
+
+    modalContent.appendChild(editForm)
+
+    let updateButton = document.createElement('button')
+    updateButton.className = 'updateButton'
+    updateButton.textContent = "UPDATE"
+    updateButton.addEventListener('click', () => {
+        updateButtonClickHandler(post)
+        modal.style.display = "none";
+        modalWindow.style.display = 'none'
+    })
+    modalContent.appendChild(updateButton)
+    let modal = document.getElementById('myModal')
+    let span = document.getElementById('close')
+    let modalWindow = document.getElementById('modalWindow')
+    modalWindow.style.display = 'block'
+    modal.style.display = "block";
+    span.onclick = function() {
+        modal.style.display = "none";
+        modalWindow.style.display = 'none'
+    }
+    
+}
+
+const deletePostButtonClickHandler = (post) => {
+    deleteMethodOptions.headers.Authorization = 'Token ' + localStorage.getItem('token')
+    api.makeAPIRequest('post/?id=' + post.id, deleteMethodOptions)
+        .then(response => {
+            console.log(response);
+            getUserProfile("", true)  
+        })
+}
+
+export function createPostDiv(post, isMyPost) {
     const imageBox = document.getElementById(post.id);
     if (imageBox.hasChildNodes()) {
         while (imageBox.firstChild) {
@@ -178,14 +237,33 @@ export function createPostDiv(post) {
     }
     const postAuthorName = document.createElement('div');
     postAuthorName.className = 'postAuthorName';
-    const postAuthor = document.createElement('button')
-    postAuthor.className = 'postAuthor'
-    postAuthor.textContent = post.meta.author;
-    postAuthor.addEventListener('click', () => {
-        let isMyProfile = false;
-        getUserProfile(post.meta.author, isMyProfile)
-    })
-    postAuthorName.appendChild(postAuthor);
+    
+    if (isMyPost) {
+        const editButton = document.createElement('button')
+        editButton.className = 'editPostButton'
+        editButton.textContent = "Edit Post"
+        editButton.addEventListener('click', () => {
+            editPostButtonClickHandler(post)
+        })
+        postAuthorName.appendChild(editButton)
+
+        const deleteButton = document.createElement('button')
+        deleteButton.className = 'deletePostButton'
+        deleteButton.textContent = "Delete Post"
+        deleteButton.addEventListener('click', () => {
+            deletePostButtonClickHandler(post)
+        })
+        postAuthorName.appendChild(deleteButton)
+    } else {
+        const postAuthor = document.createElement('button')
+        postAuthor.className = 'postAuthor'
+        postAuthor.textContent = post.meta.author;
+        postAuthor.addEventListener('click', () => {
+            let isMyProfile = false;
+            getUserProfile(post.meta.author, isMyProfile)
+        })
+        postAuthorName.appendChild(postAuthor);
+    }
     imageBox.appendChild(postAuthorName);
 
     let postDate = new Date(post.meta.published * 1000);
@@ -220,7 +298,7 @@ export function createPostDiv(post) {
                     api.makeAPIRequest('post/?id=' + post.id, getMethodOptions)
                     .then(res => {
                         //console.log(res);
-                        createPostDiv(res)
+                        createPostDiv(res, isMyPost)
                     })
                 })
             .catch(err => console.log(err))
@@ -239,7 +317,7 @@ export function createPostDiv(post) {
                     api.makeAPIRequest('post/?id=' + post.id, getMethodOptions)
                     .then(res => {
                         //console.log(res);
-                        createPostDiv(res)
+                        createPostDiv(res, isMyPost)
                     })
                 }
             )
@@ -267,7 +345,7 @@ export function createPostDiv(post) {
     commentButton.textContent = "Comment (" + post.comments.length + ")";
     commentButton.addEventListener('click', () => {
         localStorage.setItem('currentPostId', post.id)
-        commentButtonClickHandler()
+        commentButtonClickHandler(isMyPost)
         localStorage.removeItem('currentPostId')
     })
     otherInfo.appendChild(commentButton);
@@ -293,7 +371,7 @@ const handleResponse = (response) => {
         imageBox.className = 'imageBox'
         imageBox.id = post.id;
         content[0].appendChild(imageBox)
-        createPostDiv(post);
+        createPostDiv(post, false);
     })
 }
 export default function getUserFeed() {

@@ -4,7 +4,7 @@ import { createPostDiv } from './feedPage.js';
 
 
 // A helper you may want to use when uploading new images to the server.
-// import { fileToDataUrl } from './helpers.js';
+import { fileToDataUrl } from './helpers.js';
 
 // This url may need to change depending on what port your backend is running
 // on.
@@ -41,14 +41,70 @@ const getFollowingInfo = (user) => {
         .catch((error) => console.log(error));
 }
 
+const removePrefix = (string) => {
+    if (string.includes("jpeg")) {
+        return string.replace('data:image/jpeg;base64,', '')
+    } else if (string.includes("png")) {
+        return string.replace('data:image/png;base64,', '')
+    } else if (string.includes("jpg")) {
+        return string.replace('data:image/jpg;base64,', '')
+    }
+}
+const postButtonClickHandler = () => {
+    let postForm = document.forms.postAddingForm
+    let uploadedImage = postForm.elements.uploadFile.files[0];
+    let newPromise = fileToDataUrl(uploadedImage)
+    newPromise
+        .then(
+            response=> {
+                let newUrl = removePrefix(response)
+                let postDescription = postForm.elements.descriptionOfPost.value
+                postMethodOptions.headers.Authorization = 'Token ' + localStorage.getItem('token')
+                let newBody = {
+                    'description_text': postDescription,
+                    'src': newUrl
+                }
+                postMethodOptions.body = JSON.stringify(newBody)
+                api.makeAPIRequest('post/' , postMethodOptions)
+                    .then(response => {
+                        console.log(response);
+                        getUserProfile("", true)
+                    })
+                    .catch(error => console.log(error))
+            })
+}
+
 const newPostButtonClickHandler = () => {
     let modalContent = document.getElementById("modal-content");
     while (modalContent.firstChild) {
         modalContent.removeChild(modalContent.firstChild);
     }
-    let para = document.createElement("p")
-    para.textContent = "New Post section comming soon"
-    modalContent.appendChild(para)
+
+    let postAddingForm = document.createElement("form")
+    postAddingForm.name = "postAddingForm"
+
+    let descriptionText = document.createElement("input")
+    descriptionText.type = 'text'
+    descriptionText.name = 'descriptionOfPost'
+    descriptionText.placeholder = 'Post Description'
+    postAddingForm.appendChild(descriptionText)
+
+    let uploadFile = document.createElement('input')
+    uploadFile.type = 'file'
+    uploadFile.name = 'uploadFile'
+    postAddingForm.appendChild(uploadFile)
+
+    modalContent.appendChild(postAddingForm)
+
+    let postButton = document.createElement('button')
+    postButton.className = 'postButton'
+    postButton.textContent = "POST"
+    postButton.addEventListener('click', () => {
+        postButtonClickHandler()
+        modal.style.display = "none";
+        modalWindow.style.display = 'none'
+    })
+    modalContent.appendChild(postButton)
     let modal = document.getElementById('myModal')
     let span = document.getElementById('close')
     let modalWindow = document.getElementById('modalWindow')
@@ -144,7 +200,7 @@ const handleResponse = (user, isMyProfile) => {
                 imageBox.className = 'imageBox'
                 imageBox.id = response.id;
                 content.appendChild(imageBox)
-                createPostDiv(response);
+                createPostDiv(response, isMyProfile);
             })
     })
     

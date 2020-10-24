@@ -17,11 +17,12 @@
 
 
 .imageBox {
-    width: 45%;
+    width: 500px;
     border: 1px solid red;
     display: flex;
     flex-direction: column;
     margin: 20px;
+    box-sizing: border-box;
 }
 
 .postAuthorName {
@@ -33,6 +34,14 @@
 
 .postAuthor {
     font-size: 15pt;
+}
+
+.editPostButton {
+
+}
+
+.deletePostButton {
+    
 }
 
 .postTimestamp {
@@ -49,6 +58,7 @@
 
 img {
     width: 100%;
+    height: 100%;
 }
 
 .postInfo {

@@ -1,6 +1,7 @@
 export const postMethodOptions = {
     method: 'POST',
     headers: {
+        'Authorization': '',
         'Content-Type': 'application/json'
     },
     body: JSON.stringify()
@@ -9,6 +10,7 @@ export const postMethodOptions = {
 export const deleteMethodOptions = {
     method: 'DELETE',
     headers: {
+        'Authorization': '',
         'Content-Type': 'application/json'
     },
     body: JSON.stringify()
