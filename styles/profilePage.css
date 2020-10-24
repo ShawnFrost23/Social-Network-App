@@ -66,3 +66,11 @@
 .unfollowButton {
     margin: 10px;
 }
+
+.uploadANewPost {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid red;
+}

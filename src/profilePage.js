@@ -11,21 +11,17 @@ import { createPostDiv } from './feedPage.js';
 const api = new API('http://localhost:5000');
 
 const followButtonClickHandler = (user) => {
-    console.log("Follow button clicked for " + user.username);
     putMethodOptions.headers.Authorization = 'Token ' + localStorage.getItem('token')
     api.makeAPIRequest('user/follow?username=' + user.username, putMethodOptions)
         .then(response => {
-            console.log("Follow: " + response);
             getFollowingInfo(user)
         })
 }
 
 const unfollowButtonClickHandler = (user) => {
-    console.log("Unfollow button clicked for " + user.username);
     putMethodOptions.headers.Authorization = 'Token ' + localStorage.getItem('token')
     api.makeAPIRequest('user/unfollow?username=' + user.username, putMethodOptions)
         .then(response => {
-            console.log("Unfollow: " + response);
             getFollowingInfo(user)
         })
     
@@ -43,6 +39,25 @@ const getFollowingInfo = (user) => {
             numFollowing.textContent = "Following: " + response.following.length
         })
         .catch((error) => console.log(error));
+}
+
+const newPostButtonClickHandler = () => {
+    let modalContent = document.getElementById("modal-content");
+    while (modalContent.firstChild) {
+        modalContent.removeChild(modalContent.firstChild);
+    }
+    let para = document.createElement("p")
+    para.textContent = "New Post section comming soon"
+    modalContent.appendChild(para)
+    let modal = document.getElementById('myModal')
+    let span = document.getElementById('close')
+    let modalWindow = document.getElementById('modalWindow')
+    modalWindow.style.display = 'block'
+    modal.style.display = "block";
+    span.onclick = function() {
+        modal.style.display = "none";
+        modalWindow.style.display = 'none'
+    }
 }
 
 const handleResponse = (user, isMyProfile) => {
@@ -98,6 +113,19 @@ const handleResponse = (user, isMyProfile) => {
 
         profilePage.appendChild(followTheUser)
 
+    } else if (isMyProfile) {
+        const uploadANewPost = document.createElement('div')
+        uploadANewPost.className = 'uploadANewPost'
+
+        const newPostButton = document.createElement('button')
+        newPostButton.className = 'newPostButton'
+        newPostButton.textContent = 'New Post'
+        newPostButton.addEventListener('click', () => {
+            newPostButtonClickHandler()
+        })
+        uploadANewPost.appendChild(newPostButton)
+
+        profilePage.appendChild(uploadANewPost)
     }
 
     const content = document.createElement('div')
@@ -111,7 +139,6 @@ const handleResponse = (user, isMyProfile) => {
         getMethodOptions.headers.Authorization = 'Token ' + localStorage.getItem('token')
         api.makeAPIRequest('post/?id=' + postId, getMethodOptions)
             .then(response => {
-                console.log(response);
                 let content = document.getElementById('userProfile')
                 let imageBox = document.createElement('div')
                 imageBox.className = 'imageBox'
@@ -124,7 +151,6 @@ const handleResponse = (user, isMyProfile) => {
 }
 
 export default function getUserProfile(user, isMyProfile) {
-    console.log("Hey username " + user + " pressed");
     const userFeed = document.getElementById('userFeed')
     if (userFeed.hasChildNodes()) {
         while (userFeed.firstChild) {
