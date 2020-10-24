@@ -34,7 +34,7 @@
     border: 1px solid red;
 }
 
-.numFollowers {
+#numFollowers {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -42,11 +42,27 @@
     border: 1px solid red;
     margin: 10px;
 }
-.numFollowing {
+#numFollowing {
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 12pt;
     border: 1px solid red;
+    margin: 10px;
+}
+
+.followTheUser {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid red;
+}
+
+.followButton {
+    margin: 10px;
+}
+
+.unfollowButton {
     margin: 10px;
 }

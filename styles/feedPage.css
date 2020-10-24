@@ -12,7 +12,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
+
 
 .imageBox {
     width: 45%;
@@ -145,7 +147,7 @@ img {
   /* The Close Button */
   .close {
     color: white;
-    float: right;
+    float: center;
     font-size: 28px;
     font-weight: bold;
   }

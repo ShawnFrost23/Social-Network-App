@@ -141,6 +141,7 @@ const commentButtonClickHandler = () => {
 const checkTimeStampDate = (postDate, postTimeStamp) => {
     let dateNow =new Date (Date.now());
     let hours = Math.abs(dateNow - postDate) / (60 * 60 * 1000);
+    
     if (hours > 24) {
         let days = Math.floor(hours / 24);
         if (days > 365) {
@@ -153,6 +154,7 @@ const checkTimeStampDate = (postDate, postTimeStamp) => {
             postTimeStamp.textContent = days + " days ago";
         }
     } else if (hours >= 1){
+        hours = Math.ceil(hours)
         if (hours == 1) {
             postTimeStamp.textContent = hours + " hour ago";
         } else {
