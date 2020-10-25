@@ -123,15 +123,22 @@ const handleResponse = (user, isMyProfile) => {
             profilePage.removeChild(profilePage.firstChild);
         }
     }
-    const userNameSection = document.createElement('div')
-    userNameSection.className = "userNameSection"
-    userNameSection.textContent = user.username
-    profilePage.appendChild(userNameSection)
-
     const nameSection = document.createElement('div')
     nameSection.className = "nameSection"
     nameSection.textContent = user.name
     profilePage.appendChild(nameSection)
+
+    const userNameSection = document.createElement('div')
+    userNameSection.className = "userNameSection"
+    userNameSection.textContent = "@" + user.username
+    profilePage.appendChild(userNameSection)
+
+    const emailSection = document.createElement('div')
+    emailSection.className = "emailSection"
+    emailSection.textContent = user.email
+    profilePage.appendChild(emailSection)
+
+    
 
     const followInfo = document.createElement('div')
     followInfo.className = "followInfo"

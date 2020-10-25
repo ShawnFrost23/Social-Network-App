@@ -3,7 +3,9 @@ import {postMethodOptions} from './options.js'
 
 const api = new API('http://localhost:5000');
 
-
+//=========================================================================================
+// Code for register and handling all register related activites.
+//=========================================================================================
 var registerButtonForRegisterPage = document.getElementById('registerButtonForRegisterPage')
 var loginButtonForRegisterPage = document.getElementById('loginButtonForRegisterPage')
 const registerForm = document.forms.registerForm

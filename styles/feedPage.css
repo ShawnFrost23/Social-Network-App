@@ -41,7 +41,7 @@
 }
 
 .deletePostButton {
-    
+
 }
 
 .postTimestamp {
@@ -90,8 +90,6 @@ img {
     display: flex;
     width: 100%;
 }
-
-
 
 .numLikesButton {
     width: 50%;

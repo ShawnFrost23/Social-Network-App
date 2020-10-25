@@ -11,6 +11,7 @@
         <link rel="stylesheet" type="text/css" media="screen" href="styles/registerPage.css">
         <link rel="stylesheet" type="text/css" media="screen" href="styles/feedPage.css">
         <link rel="stylesheet" type="text/css" media="screen" href="styles/profilePage.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="styles/menuBar.css">
         <script type="module" src="src/helpers.js"></script>
         <script type="module" src="src/api.js"></script>
     </head>
@@ -18,27 +19,35 @@
         <div class="container" id="loginPage">
             <div class="subContainer">
                 <h1>Social Network Login</h1>
+                <div class="buttonBox">
+                        <div id="buttonOverLogin"></div>
+                        <button class= "toggleButton">Log In</button>
+                        <button class= "toggleButton" id="registerButtonForLoginPage">Register</button>
+                </div> 
                 <form name="loginForm" id="formLoginPage">
-                    <input placeholder="Username" type="text" name="usernameLogin"> <br>
-                    <input placeholder="Password" type="password" name="passwordLogin"> <br>
+                    <input class= "formInput" placeholder="Username" type="text" name="usernameLogin"> <br>
+                    <input class= "formInput" placeholder="Password" type="password" name="passwordLogin"> <br>
                 </form>
                 <button class= "loginAndRegisterButtons" id="loginButtonForLoginPage">Login</button>
-                <button class= "loginAndRegisterButtons" id="registerButtonForLoginPage">Not a Member? Register Now</button>
             </div>
             
         </div>
         <div class="container" id="registerPage" style="display: none">
             <div class="subContainer">   
                 <h1>Social Network Register</h1>
+                <div class="buttonBox">
+                        <div id="buttonOverRegister"></div>
+                        <button class= "toggleButton" id="loginButtonForRegisterPage">Log In</button>
+                        <button class= "toggleButton" >Register</button>
+                </div> 
                 <form name="registerForm" id="formRegisterPage">
-                    <input placeholder="Enter a Username" type="text" name="usernameRegister"> <br>
-                    <input placeholder="Enter a Password" type="password" name="passwordRegister"> <br>
-                    <input placeholder="Confirm Password" type="password" name="passwordConfirmRegister"> <br>
-                    <input placeholder="Enter an Email" type="text" name="emailRegister"> <br>
-                    <input placeholder="Enter your Name" type="text" name="nameRegister"> <br>
+                    <input class= "formInput" placeholder="Enter a Username" type="text" name="usernameRegister"> <br>
+                    <input class= "formInput" placeholder="Enter a Password" type="password" name="passwordRegister"> <br>
+                    <input class= "formInput" placeholder="Confirm Password" type="password" name="passwordConfirmRegister"> <br>
+                    <input class= "formInput" placeholder="Enter an Email" type="text" name="emailRegister"> <br>
+                    <input class= "formInput" placeholder="Enter your Name" type="text" name="nameRegister"> <br>
                 </form>
                 <button class= "loginAndRegisterButtons" id="registerButtonForRegisterPage">Register</button>
-                <button class= "loginAndRegisterButtons" id="loginButtonForRegisterPage">Already a Member? Login Now</button>
             </div>
         </div>
 
@@ -63,6 +72,7 @@
             </div>
         </div>
         <script type="module" src="src/main.js"></script>
+        <script type="module" src="src/loginPage.js"></script>
         <script type="module" src="src/registerPage.js"></script>
         <script type="module" src="src/menuBar.js"></script>
     </body>

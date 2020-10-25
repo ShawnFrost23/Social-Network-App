@@ -1,10 +1,7 @@
 import API from './api.js';
-import {postMethodOptions, getMethodOptions, putMethodOptions} from './options.js'
+import {getMethodOptions, putMethodOptions} from './options.js'
 import getUserFeed from './feedPage.js';
 import getUserProfile from './profilePage.js';
-
-// A helper you may want to use when uploading new images to the server.
-// import { fileToDataUrl } from './helpers.js';
 
 // This url may need to change depending on what port your backend is running
 // on.
@@ -16,6 +13,8 @@ goHomeButton.addEventListener('click', () => {
     profilePage.style.display = 'none'
     const userFeed = document.getElementById('userFeed')
     userFeed.style.display = 'flex'
+    const editProfileButton = document.getElementById('editMyProfile')
+    editProfileButton.style.display = 'none'
     getUserFeed()
 })
 
@@ -25,6 +24,8 @@ goToMyProfileButton.addEventListener('click', () => {
     profilePage.style.display = 'flex'
     const userFeed = document.getElementById('userFeed')
     userFeed.style.display = 'none'
+    const editProfileButton = document.getElementById('editMyProfile')
+    editProfileButton.style.display = 'block'
     getUserProfile("", true)
     
 })
@@ -39,7 +40,7 @@ const updateButtonClickHandler = () => {
             let newName = editProfileForm.elements.changeName.value 
             let newPassword = editProfileForm.elements.changePassword.value
             let newBody = {}
-            
+
             if (newEmail.length != 0) {
                 newBody.email = newEmail
             } 
@@ -53,7 +54,7 @@ const updateButtonClickHandler = () => {
             putMethodOptions.body = JSON.stringify(newBody)
             api.makeAPIRequest('user/', putMethodOptions)
                 .then(response => {
-            
+                    
                 })
                 .catch(error => console.log(error))
         })
