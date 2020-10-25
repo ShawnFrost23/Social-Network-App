@@ -181,6 +181,7 @@ const updateButtonClickHandler = (post) => {
         })
         .catch(err => console.log(err))
 }
+
 const editPostButtonClickHandler = (post) => {
     let modalContent = document.getElementById("modal-content");
     while (modalContent.firstChild) {

@@ -1,34 +1,33 @@
-.topMenuBar {
-    height: 100x;
-    width: 100%;
-    background-color: black;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#feedPage {
+   
 }
-
 .content {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
+    
+    background-color: rgb(0, 0, 0);
 }
 
 
 .imageBox {
     width: 500px;
-    border: 1px solid red;
+    height: auto;
     display: flex;
     flex-direction: column;
     margin: 20px;
     box-sizing: border-box;
+    padding: 10px;
+    border: 2px solid rgb(199, 115, 5);
+    background-color: rgb(0, 0, 0);
+    border-radius: 20px;
 }
 
 .postAuthorName {
     display: flex;
     justify-content: center;
-    height: 10%;
+    height: 50px;
     width: 100%;
 }
 
@@ -37,22 +36,23 @@
 }
 
 .editPostButton {
-
+    width: 45%
 }
 
 .deletePostButton {
-
+    width: 45%
 }
 
-.postTimestamp {
+.postTimeStamp {
     display: flex;
     justify-content: flex-start;
-    height: 10%;
+    height: 20px;
     width: 100%;
+    color: white;
 }
 
 .image {
-    height: 50%;
+    height: 70%;
     width: 100%;
 }
 
@@ -64,7 +64,7 @@ img {
 .postInfo {
     display: flex;
     flex-direction: column;
-    height: 10%;
+    height: 100px;
     width: 100%;
 }
 
@@ -76,14 +76,10 @@ img {
 
 .likeButton {
     width: 50%;
-    height: 40px;
-    margin: 5px;
 }
 
 .unlikeButton {
     width: 50%;
-    height: 40px;
-    margin: 5px;
 }
 
 .otherInfo { 
@@ -93,23 +89,18 @@ img {
 
 .numLikesButton {
     width: 50%;
-    height: 40px;
-    margin: 5px;
+
 }
 
-.numComments {
-    width: 50%;
-    height: 100%;
-}
 
 .commentButton {
     width: 50%;
-    height: 40px;
-    margin: 5px;
 }
+
 .postDescription {
-    height: 20%;
+    height: auto;
     width: 100%;
+    color: white;
 }
 
 

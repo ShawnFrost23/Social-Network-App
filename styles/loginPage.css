@@ -34,7 +34,7 @@
     top: 0;
     left: 0;
     position: absolute;
-    width: 110px;
+    width: 100px;
     height: 100%; 
     background: linear-gradient(to right, #ff105f, #ffad06);
     border-radius: 30px;
@@ -59,12 +59,9 @@
 
 .loginAndRegisterButtons {
     width: 45%;
-    padding: 10px 30px;
-    cursor: pointer;
-    background: linear-gradient(to right, #ff105f, #ffad06);
-    border-radius: 30px;
-    border: 0;
-    outline: none;
 }   
+
+
+
 
 

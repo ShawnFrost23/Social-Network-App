@@ -24,9 +24,9 @@ const handleLogin = (res) => {
 
 const handleFailLogin = (err) => {
     const username = document.getElementsByName('usernameLogin')
-    username[0].style.border = '1px solid red';
+    username[0].style.border = '2px solid red';
     const password = document.getElementsByName('passwordLogin')
-    password[0].style.border = '1px solid red';
+    password[0].style.border = '2px solid red';
     const errorMessageDisplay = document.createElement('p')
     errorMessageDisplay.textContent = err;
     errorMessageDisplay.id = 'errorMessageDisplayForLogin';

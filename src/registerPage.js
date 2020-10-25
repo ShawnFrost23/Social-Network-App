@@ -14,10 +14,10 @@ const handleNotEqualPasswords = () => {
     const username = document.getElementsByName('usernameRegister')
     username[0].style.border = ""
     const password = document.getElementsByName('passwordRegister')
-    password[0].style.border = '1px solid red';
+    password[0].style.border = '2px solid red';
     password[0].textContent = ""
     const passwordConfirm = document.getElementsByName('passwordConfirmRegister')
-    passwordConfirm[0].style.border = '1px solid red';
+    passwordConfirm[0].style.border = '2px solid red';
     passwordConfirm[0].textContent = '';
     if (document.getElementById('errorMessageDisplayForRegister')) {
         const errorMessageDisplay = document.getElementById('errorMessageDisplayForRegister');
@@ -39,7 +39,7 @@ const handleRegister = (res) => {
 
 const handleFailRegister = (err) => {
     const username = document.getElementsByName('usernameRegister')
-    username[0].style.border = '1px solid red';
+    username[0].style.border = '2px solid red';
     const password = document.getElementsByName('passwordRegister')
     password[0].style.border = '';
     const passwordConfirm = document.getElementsByName('passwordConfirmRegister')

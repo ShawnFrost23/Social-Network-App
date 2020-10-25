@@ -110,3 +110,9 @@ editMyProfileButton.addEventListener('click', () => {
     }
     
 })
+
+const logOutButton = document.getElementById('logOutButton')
+logOutButton.addEventListener('click', () => {
+    localStorage.removeItem('token')
+    window.location.reload()
+})
