@@ -31,10 +31,13 @@ const handleNotEqualPasswords = () => {
 }
 
 const handleRegister = (res) => {
+        localStorage.setItem('token', res.token)
+        console.log(res.token);
         const registerPage = document.getElementById('registerPage');
         registerPage.style.display = 'none';
         const feedPage = document.getElementById('feedPage')
         feedPage.style.display = 'flex';
+        
 }
 
 const handleFailRegister = (err) => {
