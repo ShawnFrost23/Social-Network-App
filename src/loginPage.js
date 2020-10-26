@@ -19,6 +19,7 @@ const handleLogin = (res) => {
         loginPage.style.display = 'none';
         const feedPage = document.getElementById('feedPage');
         feedPage.style.display = 'flex';
+        localStorage.setItem('numberOfPosts' , 10)
         getUserFeed();
 }
 

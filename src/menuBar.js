@@ -11,10 +11,15 @@ const goHomeButton = document.getElementById('goHome')
 goHomeButton.addEventListener('click', () => {
     const profilePage = document.getElementById('profilePage')
     profilePage.style.display = 'none'
+
     const userFeed = document.getElementById('userFeed')
     userFeed.style.display = 'flex'
+
     const editProfileButton = document.getElementById('editMyProfile')
     editProfileButton.style.display = 'none'
+
+    const myProfileButton = document.getElementById('myProfile')
+    myProfileButton.style.display = 'block'
     getUserFeed()
 })
 
@@ -22,10 +27,15 @@ const goToMyProfileButton = document.getElementById('myProfile')
 goToMyProfileButton.addEventListener('click', () => {
     const profilePage = document.getElementById('profilePage')
     profilePage.style.display = 'flex'
+
     const userFeed = document.getElementById('userFeed')
     userFeed.style.display = 'none'
+
     const editProfileButton = document.getElementById('editMyProfile')
     editProfileButton.style.display = 'block'
+
+    const myProfileButton = document.getElementById('myProfile')
+    myProfileButton.style.display = 'none'
     getUserProfile("", true)
     
 })
@@ -54,7 +64,7 @@ const updateButtonClickHandler = () => {
             putMethodOptions.body = JSON.stringify(newBody)
             api.makeAPIRequest('user/', putMethodOptions)
                 .then(response => {
-                    
+                    getUserProfile("", true)
                 })
                 .catch(error => console.log(error))
         })
@@ -74,18 +84,21 @@ editMyProfileButton.addEventListener('click', () => {
     changeEmail.type = 'text'
     changeEmail.name = 'changeEmail'
     changeEmail.placeholder = 'Change Your Email'
+    changeEmail.className = "formInput"
     editProfileForm.appendChild(changeEmail)
 
     let changeName = document.createElement("input")
     changeName.type = 'text'
     changeName.name = 'changeName'
     changeName.placeholder = 'Change Your Name'
+    changeName.className = "formInput"
     editProfileForm.appendChild(changeName)
 
     let changePassword = document.createElement("input")
     changePassword.type = 'password'
     changePassword.name = 'changePassword'
     changePassword.placeholder = 'Change Your Password'
+    changePassword.className = "formInput"
     editProfileForm.appendChild(changePassword)
 
     modalContent.appendChild(editProfileForm)

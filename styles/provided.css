@@ -40,7 +40,7 @@ form {
     align-items: center;
 }
 
-.loginAndRegisterButtons, .menuButtons, .editPostButton, .deletePostButton, .likeButton, .unlikeButton, .numLikesButton, .commentButton {
+.loginAndRegisterButtons, .menuButtons, .editPostButton, .deletePostButton, .likeButton, .unlikeButton, .numLikesButton, .commentButton, .postCommentButton, .followButton, .unfollowButton, .newPostButton, .postButton, .updateButton {
     height: 40px;
     margin: 5px;
     display: flex;
@@ -55,7 +55,7 @@ form {
     font-size: 12pt;
 }
 
-.loginAndRegisterButtons:hover, .menuButtons:hover, .editPostButton:hover, .deletePostButton:hover, .likeButton:hover, .unlikeButton:hover,.numLikesButton:hover, .commentButton:hover {
+.loginAndRegisterButtons:hover, .menuButtons:hover, .editPostButton:hover, .deletePostButton:hover, .likeButton:hover, .unlikeButton:hover,.numLikesButton:hover, .commentButton:hover, .postCommentButton:hover, .followButton:hover, .unfollowButton:hover, .newPostButton:hover, .postButton:hover, .updateButton:hover {
     background: linear-gradient(to right, #ffad06, #ff105f);
     font-size: 13pt;
 }

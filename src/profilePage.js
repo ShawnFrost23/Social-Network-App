@@ -50,6 +50,7 @@ const removePrefix = (string) => {
         return string.replace('data:image/jpg;base64,', '')
     }
 }
+
 const postButtonClickHandler = () => {
     let postForm = document.forms.postAddingForm
     let uploadedImage = postForm.elements.uploadFile.files[0];
@@ -67,7 +68,6 @@ const postButtonClickHandler = () => {
                 postMethodOptions.body = JSON.stringify(newBody)
                 api.makeAPIRequest('post/' , postMethodOptions)
                     .then(response => {
-                        console.log(response);
                         getUserProfile("", true)
                     })
                     .catch(error => console.log(error))
@@ -82,10 +82,12 @@ const newPostButtonClickHandler = () => {
 
     let postAddingForm = document.createElement("form")
     postAddingForm.name = "postAddingForm"
+    postAddingForm.id = "postAddingForm"
 
     let descriptionText = document.createElement("input")
     descriptionText.type = 'text'
     descriptionText.name = 'descriptionOfPost'
+    descriptionText.className = "formInput"
     descriptionText.placeholder = 'Post Description'
     postAddingForm.appendChild(descriptionText)
 
@@ -196,7 +198,12 @@ const handleResponse = (user, isMyProfile) => {
     content.id = 'userProfile'
     profilePage.appendChild(content)
     if (user.posts.length == 0) {
-        content.textContent = "Make you first post to see it here."
+        if (isMyProfile) {
+            content.textContent = "Make your first post to see it here."
+        } else {
+            content.textContent = "User has not posted their first post yet!"
+        }
+        
     }
     user.posts.forEach(postId => {
         getMethodOptions.headers.Authorization = 'Token ' + localStorage.getItem('token')

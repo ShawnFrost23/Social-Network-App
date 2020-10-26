@@ -8,6 +8,18 @@ import getUserProfile from './profilePage.js';
 // on.
 const api = new API('http://localhost:5000');
 
+// window.addEventListener('scroll', () => {
+//     const {scrollTop, scrollHeight, clientHeight} = document.documentElement;
+//     const numberOfPost = localStorage.getItem('numberOfPost')
+//     if (clientHeight + scrollTop >= scrollHeight - 10) {
+//         console.log("Page at bottom")
+//         api.makeAPIRequest('user/feed?p=' + , getMethodOptions)
+//             .then(response => handleResponse(response))
+//             .catch(err => console.log(err));
+//     }
+// })
+
+
 const numLikesButtonClickHandler = () => {
     let postId = localStorage.getItem('currentPostId')
     getMethodOptions.Authorization = 'Token ' + localStorage.getItem('token')
@@ -39,7 +51,7 @@ const numLikesButtonClickHandler = () => {
                 let span = document.getElementById('close')
                 let modalWindow = document.getElementById('modalWindow')
                 modalWindow.style.display = 'block'
-                modal.style.display = "block";
+                modal.style.display = 'block';
                 span.onclick = function() {
                     modal.style.display = "none";
                     modalWindow.style.display = 'none'
@@ -74,12 +86,13 @@ const commentButtonClickHandler = (isMyPost) => {
             comment.placeholder = 'Type your comment here'
             comment.name = 'commentBox'
             comment.type = 'text'
-            comment.classname = 'commentBox'
+            comment.className = "formInput"
             commentForm.appendChild(comment)
             modalContent.appendChild(commentForm);
             commentForm = document.forms.commentForm
             let postComment = document.createElement('button')
             postComment.textContent = 'Post'
+            postComment.className = 'postCommentButton'
             postComment.addEventListener('click', () => {
                 let commentPosted = commentForm.elements.commentBox.value
                 if (commentPosted) {
@@ -143,12 +156,25 @@ const checkTimeStampDate = (postDate, postTimeStamp) => {
         let days = Math.floor(hours / 24);
         if (days > 365) {
             let years = Math.floor(days / 365);
-            postTimeStamp.textContent = years + " years ago";
+            if (years == 1) {
+                postTimeStamp.textContent = years + " year ago";
+            } else {
+                postTimeStamp.textContent = years + " years ago";
+            }
         } else if (days > 30) {
             let months = Math.floor(days / 30);
+            if (months == 1) {
+                postTimeStamp.textContent = months + " month ago";
+            } else {
+                postTimeStamp.textContent = months + " months ago";
+            }
             postTimeStamp.textContent = months + " months ago";
         } else {
-            postTimeStamp.textContent = days + " days ago";
+            if (days == 1) {
+                postTimeStamp.textContent = days + " day ago";
+            } else {
+                postTimeStamp.textContent = days + " days ago";
+            }
         }
     } else if (hours >= 1){
         hours = Math.ceil(hours)
@@ -270,7 +296,10 @@ export function createPostDiv(post, isMyPost) {
     let postDate = new Date(post.meta.published * 1000);
     let postTimeStamp = document.createElement('div');
     postTimeStamp.className = 'postTimeStamp';
-    postTimeStamp = checkTimeStampDate(postDate, postTimeStamp)
+    let postTime = document.createElement('span');
+    postTime.className = 'postTime'
+    postTime = checkTimeStampDate(postDate, postTime)
+    postTimeStamp.appendChild(postTime);
     imageBox.appendChild(postTimeStamp);
 
     const image = document.createElement('div');
@@ -361,19 +390,21 @@ export function createPostDiv(post, isMyPost) {
     imageBox.appendChild(postDescription);
 }
 const handleResponse = (response) => {
-    const content = document.getElementsByClassName('content')
-    if (content[0].hasChildNodes()) {
-        while (content[0].firstChild) {
-            content[0].removeChild(content[0].firstChild);
+    const content = document.getElementById('userFeed')
+    if (content.hasChildNodes()) {
+        while (content.firstChild) {
+            content.removeChild(content.firstChild);
         }
     }
+    
     response.posts.forEach(post => {
         let imageBox = document.createElement('div')
         imageBox.className = 'imageBox'
         imageBox.id = post.id;
-        content[0].appendChild(imageBox)
+        content.appendChild(imageBox)
         createPostDiv(post, false);
     })
+
 }
 export default function getUserFeed() {
     getMethodOptions.headers.Authorization = "Token " + localStorage.getItem('token');
