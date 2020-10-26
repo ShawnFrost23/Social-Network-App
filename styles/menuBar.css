@@ -8,14 +8,17 @@
     align-items: center;
 }
 
-#goHome {
 
-}
-
-#myProfile {
-
-}
 
 #editMyProfile {
     display: none;
+}
+
+@media (max-width: 500px) {
+    .menuButtons {
+        font-size: 10pt;
+    }
+    .menuButtons:hover {
+        font-size: 11pt;
+    }
 }

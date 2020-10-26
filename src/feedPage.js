@@ -103,9 +103,8 @@ const commentButtonClickHandler = (isMyPost) => {
                     putMethodOptions.body = JSON.stringify({'comment':commentPosted});
                     api.makeAPIRequest('post/comment?id=' + newPost.id, putMethodOptions)
                         .then(response => {
-                            console.log(response);
                             localStorage.setItem('currentPostId', currentPostId)
-                            commentButtonClickHandler()
+                            commentButtonClickHandler(isMyPost)
                             localStorage.removeItem('currentPostId')
                         })
                         .catch(err => {
@@ -223,6 +222,7 @@ const editPostButtonClickHandler = (post) => {
     let descriptionText = document.createElement("input")
     descriptionText.type = 'text'
     descriptionText.name = 'descriptionOfPost'
+    descriptionText.className = "formInput"
     descriptionText.placeholder = 'Change Post Description'
     editForm.appendChild(descriptionText)
 
@@ -330,7 +330,6 @@ export function createPostDiv(post, isMyPost) {
                     getMethodOptions.headers.Authorization = 'Token ' + localStorage.getItem('token')
                     api.makeAPIRequest('post/?id=' + post.id, getMethodOptions)
                     .then(res => {
-                        //console.log(res);
                         createPostDiv(res, isMyPost)
                     })
                 })
@@ -349,7 +348,6 @@ export function createPostDiv(post, isMyPost) {
                     getMethodOptions.headers.Authorization = 'Token ' + localStorage.getItem('token')
                     api.makeAPIRequest('post/?id=' + post.id, getMethodOptions)
                     .then(res => {
-                        //console.log(res);
                         createPostDiv(res, isMyPost)
                     })
                 }

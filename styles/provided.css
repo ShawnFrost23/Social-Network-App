@@ -15,17 +15,6 @@ html, body {
     flex-direction: column;
 }
 
-.subContainer {
-    width: 410px;
-    height: 500px;
-    display: flex;
-    flex-direction: column;
-    background-color: rgba(0, 0, 0, 0.76);
-    padding: 20px;
-    border-radius: 5%;
-    justify-content: center;
-    align-items: center;
-}
 
 h1 {
     color: rgb(255, 255, 255);
@@ -58,6 +47,12 @@ form {
 .loginAndRegisterButtons:hover, .menuButtons:hover, .editPostButton:hover, .deletePostButton:hover, .likeButton:hover, .unlikeButton:hover,.numLikesButton:hover, .commentButton:hover, .postCommentButton:hover, .followButton:hover, .unfollowButton:hover, .newPostButton:hover, .postButton:hover, .updateButton:hover {
     background: linear-gradient(to right, #ffad06, #ff105f);
     font-size: 13pt;
+}
+
+@media (max-width: 500px) {
+    h1 {
+        font-size: 20pt;
+    }
 }
  
 

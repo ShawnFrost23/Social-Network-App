@@ -228,7 +228,6 @@ export default function getUserProfile(user, isMyProfile) {
         }
     }
     userFeed.style.display = 'none'
-
     const userProfile = document.getElementById('profilePage')
     userProfile.style.display = 'flex'
     getMethodOptions.headers.Authorization = 'Token ' + localStorage.getItem('token')

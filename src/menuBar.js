@@ -37,7 +37,6 @@ goToMyProfileButton.addEventListener('click', () => {
     const myProfileButton = document.getElementById('myProfile')
     myProfileButton.style.display = 'none'
     getUserProfile("", true)
-    
 })
 
 const updateButtonClickHandler = () => {
