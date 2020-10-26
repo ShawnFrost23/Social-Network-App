@@ -8,16 +8,19 @@ import getUserProfile from './profilePage.js';
 // on.
 const api = new API('http://localhost:5000');
 
-// window.addEventListener('scroll', () => {
-//     const {scrollTop, scrollHeight, clientHeight} = document.documentElement;
-//     const numberOfPost = localStorage.getItem('numberOfPost')
-//     if (clientHeight + scrollTop >= scrollHeight - 10) {
-//         console.log("Page at bottom")
-//         api.makeAPIRequest('user/feed?p=' + , getMethodOptions)
-//             .then(response => handleResponse(response))
-//             .catch(err => console.log(err));
-//     }
-// })
+window.addEventListener('scroll', () => {
+    const {scrollTop, scrollHeight, clientHeight} = document.documentElement;
+    const numberOfPost = localStorage.getItem('numberOfPosts')
+    if (clientHeight + scrollTop >= scrollHeight - 10) {
+        let isPageAtBottom = true;
+        api.makeAPIRequest('user/feed?p=' + numberOfPost, getMethodOptions)
+            .then(response => {
+                localStorage.setItem('numberOfPosts', parseInt(numberOfPost) + 10)
+                handleResponse(response, isPageAtBottom)
+            })
+            .catch(err => console.log(err));
+    }
+})
 
 
 const numLikesButtonClickHandler = () => {
@@ -389,26 +392,33 @@ export function createPostDiv(post, isMyPost) {
     postDescription.textContent = post.meta.description_text;
     imageBox.appendChild(postDescription);
 }
-const handleResponse = (response) => {
+const handleResponse = (response, isPageAtBottom) => {
     const content = document.getElementById('userFeed')
-    if (content.hasChildNodes()) {
-        while (content.firstChild) {
-            content.removeChild(content.firstChild);
+    if (!isPageAtBottom) {
+        if (content.hasChildNodes()) {
+            while (content.firstChild) {
+                content.removeChild(content.firstChild);
+            }
         }
     }
     
     response.posts.forEach(post => {
-        let imageBox = document.createElement('div')
-        imageBox.className = 'imageBox'
-        imageBox.id = post.id;
-        content.appendChild(imageBox)
-        createPostDiv(post, false);
+        if (post.id) {
+            let imageBox = document.createElement('div')
+            imageBox.className = 'imageBox'
+            imageBox.id = post.id;
+            content.appendChild(imageBox)
+            createPostDiv(post, false);
+        } else {
+            // Do Nothing
+        }
     })
 
 }
 export default function getUserFeed() {
     getMethodOptions.headers.Authorization = "Token " + localStorage.getItem('token');
+    localStorage.setItem('numberOfPosts', 10)
     api.makeAPIRequest('user/feed', getMethodOptions)
-        .then(response => handleResponse(response))
+        .then(response => handleResponse(response, false))
         .catch(err => console.log(err));
 }
