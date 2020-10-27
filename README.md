@@ -8,8 +8,11 @@ To work with your frontend code locally with the web server, you will have to ru
 This will start up a second HTTP server where if you navigate to `http://localhost:8000` (or whatever URL it provides) it will run your `index.html`
 
 Go into Backend folder and run:
-`$ python3 run.py`
+`$ pip3 install -r requirements.txt`
+This will install necessary files to run the backend.
 
+Go into Backend folder and run:
+`$ python3 run.py`
 This is to start the backend server
 
 ### Features
